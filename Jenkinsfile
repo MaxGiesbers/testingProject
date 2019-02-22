@@ -112,9 +112,7 @@ def sendEmail(status) {
  mail (
  to: "max.giesbers@inspiro.nl", 
  subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
- body: """See commit changes: <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>""" + getLastCommitChanges() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
+ body: """<p>See commit changes: <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>"""
 }
 
-
-// """
-//                         <p>Check rich diff at <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>"""
+// + "\n\n Check console output at: $BUILD_URL/console" + "\n")
