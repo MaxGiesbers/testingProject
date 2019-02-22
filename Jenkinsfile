@@ -43,7 +43,7 @@ node {
         // git url: 'https://github.com/MaxGiesbers/testingProject.git'
       }
 
-      stage("last-changes") {
+      //stage("last-changes") {
         sendEmail("succes")
         getLastCommitChanges()
         // getLastChanges()
@@ -59,7 +59,7 @@ node {
               //     println(commitInfo.getCommitMessage())
               //     println(commit.getChanges())
               // }
-      }
+      //}
 
 }
 
