@@ -1,5 +1,5 @@
-import jenkins.model.*
-jenkins = Jenkins.instance
+// import jenkins.model.*
+// jenkins = Jenkins.instance
 
 node
 {
@@ -9,9 +9,10 @@ node
   }
   stage('Compile-Package')
   {
+    echo " test"
 
-    echo "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)"
-    echo "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n"
+    // echo "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)"
+    // echo "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n"
   }
 }
 
