@@ -113,7 +113,9 @@ def sendEmail(status) {
  to: "max.giesbers@inspiro.nl", 
  subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
  mimeType: 'text/html',
- body: """<p>See commit changes: <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""")
+ body: """<p>Check commit changes at: <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>
+          <p> Check console output at: <a href=" $BUILD_URL/console"["Jenkins console output"]</a></p>
+        """)
 }
 
 // + "\n\n Check console output at: $BUILD_URL/console" + "\n")
