@@ -44,10 +44,11 @@ node {
       }
 
       stage("last-changes") {
-        def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
-              publisher.publishLastChanges()
-              // def changes = publisher.getLastChanges()
-              // sendEmail("ultieme test")
+        getLastChanges()
+        // def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
+        //       publisher.publishLastChanges()
+        //       def changes = publisher.getLastChanges()
+        //       sendEmail("ultieme test")
               //println(changes.getEscapedDiff())
               // for (commit in changes.getCommits()) {
               //     println(commit)
@@ -60,7 +61,15 @@ node {
 
 }
 
+ def getLastChanges()
+ {
 
+   publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
+              publisher.publishLastChanges()
+   
+   return publisher
+ }
+ 
 
 
 // def getLastChanges()
