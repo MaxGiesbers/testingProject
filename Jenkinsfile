@@ -44,6 +44,7 @@ node {
       }
 
       stage("last-changes") {
+        sendEmail("succes")
         getLastChanges()
         // def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
         //       publisher.publishLastChanges()
@@ -61,7 +62,7 @@ node {
 
 }
 
- def getLastChanges()
+ def getLastCommitChanges()
  {
 
    publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
@@ -106,10 +107,9 @@ def getChangeString() {
  return changeString
 }
 
-
 def sendEmail(status) {
  mail (
  to: "max.giesbers@inspiro.nl", 
  subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
- body: "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
+ body: "See commit changes: " + getLastCommitChanges() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
 }
