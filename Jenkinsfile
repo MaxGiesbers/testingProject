@@ -45,7 +45,8 @@ node {
 
       stage("last-changes") {
         sendEmail("succes")
-        getLastChanges()
+        getLastCommitChanges()
+        // getLastChanges()
         // def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
         //       publisher.publishLastChanges()
         //       def changes = publisher.getLastChanges()
