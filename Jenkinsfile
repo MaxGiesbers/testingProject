@@ -1,64 +1,60 @@
-#!groovy
-// Declarative //
-pipeline {
- agent any
+// // import jenkins.model.*
+// // jenkins = Jenkins.instance
 
- environment { 
- EMAIL_RECIPIENTS = 'max.giesbers@inspiro.nl, email2@domain.com'
- }
+// node
+// {
+//   stage('SCM-checkout')
+//   {
+//     git 'https://github.com/MaxGiesbers/testingProject'
+//   }
+//   stage('Compile-Package')
+//   {
+//     echo " test"
 
- stages {
- stage('Build') {
- steps {
- echo 'Building..'
- }
- }
- stage('Test') {
- steps {
- echo 'Testing..'
- }
- }
- stage('Deploy') {
- steps {
- echo 'Deploying....'
- }
- }
- }
- post {
- success {
- sendEmail("Successful")
- }
- failure {
- sendEmail("Failed")
- }
- }
-}
+//     "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)"
+//     "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n"
+//   }
+// }
 
-@NonCPS
-def getChangeString() {
- MAX_MSG_LEN = 100
- def changeString = ""
 
- echo "Gathering SCM changes"
- def changeLogSets = currentBuild.changeSets
- for (int i = 0; i < changeLogSets.size(); i++) {
- def entries = changeLogSets[i].items
- for (int j = 0; j < entries.length; j++) {
- def entry = entries[j]
- truncated_msg = entry.msg.take(MAX_MSG_LEN)
- changeString += " - ${truncated_msg} [${entry.author}]\n"
- }
- }
 
- if (!changeString) {
- changeString = " - No new changes"
- }
- return changeString
-}
+// def getChangeString() {
+//   MAX_MSG_LEN = 100
+//   def changeString = ""
+//   echo "Gathering SCM changes"
+//   def changeLogSets = currentBuild.changeSets
+//   for (int i = 0; i < changeLogSets.size(); i++) {
+//     def entries = changeLogSets[i].items
+//       for (int j = 0; j < entries.length; j++) {aa
+//         def entry = entries[j]
+//         truncated_msg = entry.msg.take(MAX_MSG_LEN)
+//         changeString += " - ${truncated_msg} [${entry.author}]\n"
+//       }
+//     }
+//   if (!changeString) {
+//   changeString = " - No new changes"
+//   }
+//  return changeString
+// }
 
-def sendEmail(status) {
- mail (
- to: "$EMAIL_RECIPIENTS", 
- subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
- body: "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
+
+node {
+      stage("checkout") {
+        git url: 'https://github.com/jenkinsci/last-changes-plugin.git'
+      }
+
+      stage("last-changes") {
+        def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
+              publisher.publishLastChanges()
+              def changes = publisher.getLastChanges()
+              println(changes.getEscapedDiff())
+              for (commit in changes.getCommits()) {
+                  println(commit)
+                  def commitInfo = commit.getCommitInfo()
+                  println(commitInfo)
+                  println(commitInfo.getCommitMessage())
+                  println(commit.getChanges())
+              }
+      }
+
 }
