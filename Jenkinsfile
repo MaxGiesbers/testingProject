@@ -46,7 +46,8 @@ node {
       stage("last-changes") {
         def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
               publisher.publishLastChanges()
-              def changes = publisher.getLastChanges()
+              // def changes = publisher.getLastChanges()
+              // sendEmail("ultieme test")
               //println(changes.getEscapedDiff())
               // for (commit in changes.getCommits()) {
               //     println(commit)
@@ -57,4 +58,49 @@ node {
               // }
       }
 
+}
+
+
+
+
+// def getLastChanges()
+// {
+
+//   def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
+//               publisher.publishLastChanges()
+//   return publisher
+//               def changes = publisher.getLastChanges()
+
+// }
+
+
+
+
+def getChangeString() {
+ MAX_MSG_LEN = 100
+ def changeString = ""
+
+ echo "Gathering SCM changes"
+ def changeLogSets = currentBuild.changeSets
+ for (int i = 0; i < changeLogSets.size(); i++) {
+ def entries = changeLogSets[i].items
+ for (int j = 0; j < entries.length; j++) {
+ def entry = entries[j]
+ truncated_msg = entry.msg.take(MAX_MSG_LEN)
+ changeString += " - ${truncated_msg} [${entry.author}]\n"
+ }
+ }
+
+ if (!changeString) {
+ changeString = " - No new changes"
+ }
+ return changeString
+}
+
+
+def sendEmail(status) {
+ mail (
+ to: "max.giesbers@inspiro.nl", 
+ subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
+ body: "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
 }
