@@ -3,9 +3,7 @@
 int main ()
 {
     std::cout << " dit is een change" << std::endl;
-    std::cout << "lijntje geklapt" << std::endl;
-    std::cout << " test" << std::endl;
-    change 1
-    change 2
+
+    nieuwe change in de file.
     return 0;
 }
