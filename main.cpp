@@ -1,5 +1,12 @@
 #include <iostream>
 
+void testfunctie()
+{
+
+    std::cout << "dit is test" << std::endl;
+}
+
+
 int main ()
 {
     std::cout << " dit is een change" << std::endl;
