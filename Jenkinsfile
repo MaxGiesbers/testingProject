@@ -11,8 +11,8 @@ node
   {
     echo " test"
 
-    // echo "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)"
-    // echo "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n"
+    "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)"
+    "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n"
   }
 }
 
