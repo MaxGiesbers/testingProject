@@ -112,6 +112,7 @@ def sendEmail(status) {
  mail (
  to: "max.giesbers@inspiro.nl", 
  subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
+ mimeType: 'text/html',
  body: """<p>See commit changes: <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""")
 }
 
