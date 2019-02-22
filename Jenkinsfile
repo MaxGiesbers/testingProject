@@ -114,11 +114,11 @@ def sendEmail(status) {
  subject: "Build $BUILD_NUMBER - " + status + " ($JOB_NAME)", 
  mimeType: 'text/html',
  body: """
-          <p>${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}
+          <p>${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}
           <br>
           Check commit changes at: <a href="${env.BUILD_URL}/last-changes">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>
           <br>
-          Check console output at: <a href=" $BUILD_URL/console"[Jenkins console output]</a></p>
+          Check console output at: <a href=" $BUILD_URL/console">Jenkins console output</a></p>
         """)
 }
 
